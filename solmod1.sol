@@ -13,19 +13,27 @@ pragma solidity 0.8.18;
        and from the balance of the “sender”.
     5. Lastly, your burn function should have conditionals to make sure the balance of "sender" is greater than or equal 
        to the amount that is supposed to be burned.
+
+
 */
+
+
+
 
 contract MyToken {
 
     // Public variables
+    // These are like the identity cards for our coin, showing its name, symbol, and how many there are in total.
     string public name;
     string public symbol;
     uint256 public totalSupply;
 
     // Mapping of addresses to balances
+    // balances: Imagine this as a list that says how many coins each person has.
     mapping(address => uint256) public balances;
 
     // Constructor to initialize the token details and total supply
+    // The contract starts by giving all the coins to the person who creates the contract. This is like the "starter pack."
     constructor(string memory _name, string memory _symbol, uint256 _totalSupply) {
         name = _name;
         symbol = _symbol;
@@ -34,6 +42,7 @@ contract MyToken {
     }
 
     // Mint function
+    // The mint function lets us make more coins. You just tell the contract how many new coins to create and who gets them.
     function mint(address account, uint256 value) external {
         // Increase the total supply
         totalSupply += value;
@@ -41,6 +50,7 @@ contract MyToken {
     }
 
     // Burn function
+    // The burn function helps us remove coins. But, we need to be careful not to remove more coins than someone actually has!
     function burn(address account, uint256 value) external {
         // Ensure the sender has enough balance to burn
         require(balances[account] >= value, "Insufficient balance to burn");
@@ -48,3 +58,4 @@ contract MyToken {
         balances[account] -= value;
     }
 }
+
